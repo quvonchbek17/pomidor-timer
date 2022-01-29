@@ -1,0 +1,30 @@
+.hour,
+.minute,
+.second {
+  width: 300px;
+  margin: 30px;
+}
+.timer__button {
+  width: 80px;
+}
+
+.timer {
+  font-size: 100px;
+}
+span,
+.hourTime,
+.minuteTime,
+.secondTime {
+  font-size: 100px;
+  color: #0dcaf0;
+}
+span {
+  margin: 0 4px;
+}
+
+.startBtn,
+.pauseBtn,
+.stopBtn,
+.resetBtn {
+  margin: 0 5px;
+}

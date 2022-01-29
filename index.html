@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <title>Timer</title>
+  </head>
+  <body>
+    <div class="container">
+      <form class="timer__form d-flex flex-column align-items-center">
+        <div class="inputs d-flex justify-content-center">
+          <input
+            class="hour form-control"
+            type="number"
+            placeholder="Hour"
+            autocomplete="off"
+            min="0"
+          />
+          <input
+            class="minute form-control"
+            type="number"
+            placeholder="Minute"
+            autocomplete="off"
+            min="0"
+            max="59"
+          />
+          <input
+            class="second form-control"
+            type="number"
+            placeholder="Second"
+            autocomplete="off"
+            min="0"
+            max="59"
+          />
+        </div>
+        <div class="buttons">
+          <button class="startBtn btn btn-outline-info" type="click">
+            Start
+          </button>
+          <button class="pauseBtn btn btn-outline-info" type="click">
+            Pause
+          </button>
+          <button class="stopBtn btn btn-outline-info" type="click">
+            Stop
+          </button>
+          <button class="resetBtn btn btn-outline-info" type="click">
+            Reset
+          </button>
+        </div>
+      </form>
+      <div class="time d-flex justify-content-center mt-5">
+        <p class="hourTime">0</p>
+        <span class="d-inline-block">:</span>
+        <p class="minuteTime">00</p>
+        <span class="d-inline-block">:</span>
+        <p class="secondTime">00</p>
+      </div>
+    </div>
+
+    <script src="./bootstrap/bootstrap.bundle.js"></script>
+    <script src="./js/script.js"></script>
+  </body>
+</html>
