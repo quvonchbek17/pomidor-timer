@@ -16,6 +16,9 @@ let allsecond;
 let allsecondBackup;
 let pauses;
 
+let tugadi = new Audio("Tugadi.mp3");
+let start = new Audio("start.mp3");
+
 hideBtns();
 
 function hideBtns() {
@@ -28,6 +31,7 @@ function hideBtns() {
     if (allsecond > 1) {
       interval = clearInterval(interval);
       startTimer(allsecond);
+      start.play();
     }
     elPauseBtn.textContent = "Pause";
   } else {
@@ -51,6 +55,7 @@ function hideBtns() {
     allsecondBackup = hourInput * 60 * 60 + minuteInput * 60 + secondInput;
     window.localStorage.setItem("secondsBackup", allsecondBackup);
     startTimer(allsecond);
+    start.play();
   });
 
   elPauseBtn.addEventListener("click", function (evt) {
@@ -65,6 +70,7 @@ function hideBtns() {
       let localTime = window.localStorage.getItem("seconds");
       interval = clearInterval(interval);
       startTimer(localTime);
+      start.play();
       elPauseBtn.textContent = "Pause";
     }
   });
@@ -76,6 +82,7 @@ function hideBtns() {
     window.localStorage.setItem("seconds", allsecondBackup);
     interval = clearInterval(interval);
     startTimer(allsecond);
+    start.play();
   });
   elStopBtn.addEventListener("click", function (evt) {
     evt.preventDefault();
@@ -84,6 +91,7 @@ function hideBtns() {
     window.localStorage.setItem("localPause", false);
     interval = clearInterval(interval);
     startTimer(allsecond);
+    tugadi.play();
     elPauseBtn.style.display = "none";
     elStopBtn.style.display = "none";
     elResetBtn.style.display = "none";
@@ -104,7 +112,12 @@ function startTimer(seconds) {
     updateTime(seconds);
 
     if (seconds <= 0) {
+      elPauseBtn.style.display = "none";
+      elStopBtn.style.display = "none";
+      elResetBtn.style.display = "none";
+      elStartBtn.style.display = "inline-block";
       interval = clearInterval(interval);
+      tugadi.play();
     }
   }, 1000);
 }
