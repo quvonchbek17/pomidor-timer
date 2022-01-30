@@ -11,9 +11,10 @@ let elTimeMinute = document.querySelector(".minuteTime");
 let elTimeSecond = document.querySelector(".secondTime");
 
 let interval;
-let pause = false;
-let allsecond = 0;
-let allsecondBackup = 0;
+let pause;
+let allsecond;
+let allsecondBackup;
+let pauses;
 
 hideBtns();
 
@@ -22,9 +23,22 @@ function hideBtns() {
   elStopBtn.style.display = "none";
   elResetBtn.style.display = "none";
 
-  let localSeconds = window.localStorage.getItem("seconds");
-  if (localSeconds > 1) {
-    startTimer(localSeconds);
+  if (!JSON.parse(window.localStorage.getItem("localPause")) || null) {
+    allsecond = window.localStorage.getItem("seconds");
+    if (allsecond > 1) {
+      interval = clearInterval(interval);
+      startTimer(allsecond);
+    }
+    elPauseBtn.textContent = "Pause";
+  } else {
+    elPauseBtn.style.display = "inline-block";
+    elStopBtn.style.display = "inline-block";
+    elResetBtn.style.display = "inline-block";
+    elStartBtn.style.display = "none";
+    elPauseBtn.textContent = "Resume";
+
+    allsecond = window.localStorage.getItem("seconds");
+    updateTime(allsecond);
   }
 
   elStartBtn.addEventListener("click", function (evt) {
@@ -35,28 +49,31 @@ function hideBtns() {
     let secondInput = Number(elSecond.value);
     allsecond = hourInput * 60 * 60 + minuteInput * 60 + secondInput;
     allsecondBackup = hourInput * 60 * 60 + minuteInput * 60 + secondInput;
-
+    window.localStorage.setItem("secondsBackup", allsecondBackup);
     startTimer(allsecond);
   });
 
   elPauseBtn.addEventListener("click", function (evt) {
     evt.preventDefault();
-    pause = !pause;
-
+    pause = !JSON.parse(window.localStorage.getItem("localPause"));
+    window.localStorage.setItem("localPause", pause);
     if (pause) {
+      window.localStorage.setItem("localPause", pause);
       interval = clearInterval(interval);
       elPauseBtn.textContent = "Resume";
     } else {
       let localTime = window.localStorage.getItem("seconds");
+      interval = clearInterval(interval);
       startTimer(localTime);
       elPauseBtn.textContent = "Pause";
     }
   });
   elResetBtn.addEventListener("click", function (evt) {
     evt.preventDefault();
-    pause = false;
+    window.localStorage.setItem("localPause", false);
     elPauseBtn.textContent = "Pause";
-    allsecond = allsecondBackup;
+    allsecond = JSON.parse(window.localStorage.getItem("secondsBackup"));
+    window.localStorage.setItem("seconds", allsecondBackup);
     interval = clearInterval(interval);
     startTimer(allsecond);
   });
@@ -64,6 +81,7 @@ function hideBtns() {
     evt.preventDefault();
     allsecond = 1;
     window.localStorage.setItem("seconds", allsecond);
+    window.localStorage.setItem("localPause", false);
     interval = clearInterval(interval);
     startTimer(allsecond);
     elPauseBtn.style.display = "none";
@@ -82,6 +100,7 @@ function startTimer(seconds) {
   interval = setInterval(function () {
     window.localStorage.setItem("seconds", seconds);
     seconds--;
+
     updateTime(seconds);
 
     if (seconds <= 0) {
@@ -90,10 +109,11 @@ function startTimer(seconds) {
   }, 1000);
 }
 
-function updateTime(allseconds) {
-  let hours = Math.floor(allseconds / 60 / 60);
-  let minutes = Math.floor((allsecond - hours * 60 * 60) / 60);
-  let seconds = Math.floor(allseconds % 60);
+function updateTime(secondsUpdate) {
+  let hours = Math.floor(secondsUpdate / 60 / 60);
+
+  let minutes = Math.floor((secondsUpdate - hours * 3600) / 60);
+  let seconds = Math.floor(secondsUpdate % 60);
 
   elTimeHour.textContent = hours;
   elTimeMinute.textContent = minutes;
