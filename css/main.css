@@ -1,8 +1,8 @@
 .hour,
 .minute,
 .second {
-  width: 300px;
-  margin: 30px;
+  max-width: 300px;
+  margin: 15px;
 }
 .timer__button {
   width: 80px;
