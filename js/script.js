@@ -51,11 +51,13 @@ function hideBtns() {
     let hourInput = Number(elHour.value);
     let minuteInput = Number(elMinute.value);
     let secondInput = Number(elSecond.value);
-    allsecond = hourInput * 60 * 60 + minuteInput * 60 + secondInput;
-    allsecondBackup = hourInput * 60 * 60 + minuteInput * 60 + secondInput;
-    window.localStorage.setItem("secondsBackup", allsecondBackup);
-    startTimer(allsecond);
-    start.play();
+    if (hourInput != 0 || minuteInput != 0 || secondInput != 0) {
+      allsecond = hourInput * 60 * 60 + minuteInput * 60 + secondInput;
+      allsecondBackup = hourInput * 60 * 60 + minuteInput * 60 + secondInput;
+      window.localStorage.setItem("secondsBackup", allsecondBackup);
+      startTimer(allsecond);
+      start.play();
+    }
   });
 
   elPauseBtn.addEventListener("click", function (evt) {
