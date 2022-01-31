@@ -55,6 +55,7 @@ function hideBtns() {
       allsecond = hourInput * 60 * 60 + minuteInput * 60 + secondInput;
       allsecondBackup = hourInput * 60 * 60 + minuteInput * 60 + secondInput;
       window.localStorage.setItem("secondsBackup", allsecondBackup);
+      interval = clearInterval(interval);
       startTimer(allsecond);
       start.play();
     }
@@ -77,7 +78,6 @@ function hideBtns() {
     }
   });
   elResetBtn.addEventListener("click", function (evt) {
-    evt.preventDefault();
     window.localStorage.setItem("localPause", false);
     elPauseBtn.textContent = "Pause";
     allsecond = JSON.parse(window.localStorage.getItem("secondsBackup"));
@@ -87,7 +87,6 @@ function hideBtns() {
     start.play();
   });
   elStopBtn.addEventListener("click", function (evt) {
-    evt.preventDefault();
     allsecond = 1;
     window.localStorage.setItem("seconds", allsecond);
     window.localStorage.setItem("localPause", false);
