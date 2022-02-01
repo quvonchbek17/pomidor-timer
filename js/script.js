@@ -54,10 +54,12 @@ function hideBtns() {
     if (hourInput != 0 || minuteInput != 0 || secondInput != 0) {
       allsecond = hourInput * 60 * 60 + minuteInput * 60 + secondInput;
       allsecondBackup = hourInput * 60 * 60 + minuteInput * 60 + secondInput;
+      window.localStorage.setItem("seconds", allsecond);
       window.localStorage.setItem("secondsBackup", allsecondBackup);
-      interval = clearInterval(interval);
-      startTimer(allsecond);
-      start.play();
+      if (window.localStorage.getItem("seconds") > 0) {
+        startTimer(allsecond);
+        start.play();
+      }
     }
   });
 
@@ -90,6 +92,15 @@ function hideBtns() {
     allsecond = 1;
     window.localStorage.setItem("seconds", allsecond);
     window.localStorage.setItem("localPause", false);
+    if (window.localStorage.getItem("seconds") <= 0) {
+      interval = clearInterval(interval);
+      startTimer(allsecond);
+      tugadi.play();
+      elPauseBtn.style.display = "none";
+      elStopBtn.style.display = "none";
+      elResetBtn.style.display = "none";
+      elStartBtn.style.display = "inline-block";
+    }
     interval = clearInterval(interval);
     startTimer(allsecond);
     tugadi.play();
