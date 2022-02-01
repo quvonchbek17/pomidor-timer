@@ -54,6 +54,7 @@ function hideBtns() {
     if (hourInput != 0 || minuteInput != 0 || secondInput != 0) {
       allsecond = hourInput * 60 * 60 + minuteInput * 60 + secondInput;
       allsecondBackup = hourInput * 60 * 60 + minuteInput * 60 + secondInput;
+      console.log(allsecond);
       window.localStorage.setItem("seconds", allsecond);
       window.localStorage.setItem("secondsBackup", allsecondBackup);
       if (window.localStorage.getItem("seconds") > 0) {
@@ -82,7 +83,8 @@ function hideBtns() {
   elResetBtn.addEventListener("click", function (evt) {
     window.localStorage.setItem("localPause", false);
     elPauseBtn.textContent = "Pause";
-    allsecond = JSON.parse(window.localStorage.getItem("secondsBackup"));
+    allsecondBackup = window.localStorage.getItem("secondsBackup");
+    console.log(allsecond);
     window.localStorage.setItem("seconds", allsecondBackup);
     interval = clearInterval(interval);
     startTimer(allsecond);
